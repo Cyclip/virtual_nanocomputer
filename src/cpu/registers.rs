@@ -13,13 +13,6 @@ pub struct PC {
     data: u8,
 }
 
-/// Memory Address Register used to store the address of the memory location
-/// from which data is to be fetched
-pub struct MAR {
-    /// Memory Address Register
-    data: u8,
-}
-
 /// Memory Data Register used to store the data fetched from the memory
 /// location
 /// This is also used to store the data to be written to the memory location
@@ -43,17 +36,6 @@ pub struct ACC {
 }
 
 impl Register for PC {
-    /// Get the value of the register
-    fn get(&self) -> u8 {
-        self.data
-    }
-    /// Set the value of the register
-    fn set(&mut self, value: u8) {
-        self.data = value;
-    }
-}
-
-impl Register for MAR {
     /// Get the value of the register
     fn get(&self) -> u8 {
         self.data
@@ -104,15 +86,6 @@ impl PC {
     /// Create a new PC
     pub fn new() -> PC {
         PC {
-            data: 0,
-        }
-    }
-}
-
-impl MAR {
-    /// Create a new MAR
-    pub fn new() -> MAR {
-        MAR {
             data: 0,
         }
     }
