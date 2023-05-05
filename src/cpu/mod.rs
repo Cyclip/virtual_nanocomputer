@@ -49,6 +49,12 @@ impl CPU {
         }
     }
 
+    /// Load a program from a file into the instruction memory
+    pub fn load_program_from_file(&mut self, filename: &str) {
+        let program = std::fs::read(filename).expect("Unable to read file");
+        self.load_program(program);
+    }
+
     /// Start the CPU
     pub fn start(&mut self) {
         self.running = true;
