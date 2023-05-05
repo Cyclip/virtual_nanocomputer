@@ -261,11 +261,7 @@ impl CPU {
                     },
 
                     Opcode::DAT => {
-                        // Get the operand from the instruction
-                        let operand = instr.operand;
-
-                        // Store the operand in the data memory
-                        self.data_memory.write(operand_addr as u32, operand);
+                        unreachable!("DAT should not be executed");
                     },
                 }
             }

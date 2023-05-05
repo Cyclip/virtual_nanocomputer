@@ -1,0 +1,9 @@
+.data
+    A   DAT 3
+    B   DAT 4
+
+.code
+        LDA A
+        ADD B
+        OUT
+        HLT

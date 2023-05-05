@@ -7,6 +7,9 @@
 //! Operand stores either
 //! 1. Memory address (label pointer or raw address)
 //! 2. Immediate value (raw value like 3)
+//! 
+//! 0x01 and onwards are all instructions
+//! 0x00 denotes data
 
 /// Instruction struct
 #[derive(Clone, Debug)]
@@ -111,5 +114,38 @@ impl Opcode {
             Opcode::OUT => 0b0001_0000,
             Opcode::DAT => 0b0001_0001,
         }
+    }
+
+    /// Generate from string
+    pub fn from_str(string: &str) -> Opcode {
+        match string {
+            "ADD" => Opcode::ADD,
+            "SUB" => Opcode::SUB,
+            "MUL" => Opcode::MUL,
+            "DIV" => Opcode::DIV,
+            "STA" => Opcode::STA,
+            "LDA" => Opcode::LDA,
+            "JMP" => Opcode::JMP,
+            "JEQ" => Opcode::JEQ,
+            "JNE" => Opcode::JNE,
+            "JGT" => Opcode::JGT,
+            "JLT" => Opcode::JLT,
+            "JZ" => Opcode::JZ,
+            "JNZ" => Opcode::JNZ,
+            "HLT" => Opcode::HLT,
+            "INP" => Opcode::INP,
+            "OUT" => Opcode::OUT,
+            "DAT" => Opcode::DAT,
+            _ => panic!("Invalid opcode"),
+        }
+    }
+}
+
+// FromStr for Opcode
+impl std::str::FromStr for Opcode {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(Opcode::from_str(s))
     }
 }

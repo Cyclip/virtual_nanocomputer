@@ -56,18 +56,25 @@ impl std::fmt::Debug for Memory {
 
 // pretty print
 // Example output:
-// Address | Value
-// ----------------
-// 0x0000  | 0x01
-// 0x0001  | 0x02
+// Address | Value | Address | Value
+// ----------------------------------
+// 0x0000  | 0x01  | 0x0010  | 0x00
+// 0x0001  | 0x02  | 0x0011  | 0x00
 
 impl std::fmt::Display for Memory {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         let mut output = String::new();
-        output.push_str("Address | Value\n");
-        output.push_str("----------------\n");
-        for (i, byte) in self.data.iter().enumerate() {
-            output.push_str(&format!("0x{:04X}  | 0x{:02X}\n", i, byte));
+        let mut i = 0;
+        while i < self.size {
+            let address = format!("0x{:04X}", i);
+            let value = format!("0x{:02X}", self.read(i));
+            output.push_str(&format!("{:<8} | {:<8}", address, value));
+            i += 1;
+            if i % 2 == 0 {
+                output.push_str("\n");
+            } else {
+                output.push_str(" | ");
+            }
         }
         write!(f, "{}", output)
     }
