@@ -60,10 +60,7 @@ impl Register for MDR {
 impl Register for CIR {
     /// Get the value of the register
     fn get(&self) -> u8 {
-        match &self.data {
-            Some(instruction) => instruction.to_bin(),
-            None => 0,
-        }
+        unimplemented!("CIR::get() not implemented")
     }
     /// Set the value of the register
     fn set(&mut self, value: u8) {
@@ -106,6 +103,11 @@ impl CIR {
         CIR {
             data: None,
         }
+    }
+
+    /// Get instruction
+    pub fn get_instruction(&self) -> Option<Instruction> {
+        self.data.clone()
     }
 }
 

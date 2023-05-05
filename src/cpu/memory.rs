@@ -47,3 +47,28 @@ impl Memory {
         self.write(address + 1, byte2);
     }
 }
+
+impl std::fmt::Debug for Memory {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "Memory {{ size: {}, data: {:?} }}", self.size, self.data)
+    }
+}
+
+// pretty print
+// Example output:
+// Address | Value
+// ----------------
+// 0x0000  | 0x01
+// 0x0001  | 0x02
+
+impl std::fmt::Display for Memory {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        let mut output = String::new();
+        output.push_str("Address | Value\n");
+        output.push_str("----------------\n");
+        for (i, byte) in self.data.iter().enumerate() {
+            output.push_str(&format!("0x{:04X}  | 0x{:02X}\n", i, byte));
+        }
+        write!(f, "{}", output)
+    }
+}

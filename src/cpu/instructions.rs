@@ -9,14 +9,16 @@
 //! 2. Immediate value (raw value like 3)
 
 /// Instruction struct
+#[derive(Clone, Debug)]
 pub struct Instruction {
     /// Opcode
     pub opcode: Opcode,
-    /// Operand
+    /// Operand (memory address)
     pub operand: u8,
 }
 
 /// All opcodes supported
+#[derive(Clone, Debug)]
 pub enum Opcode {
     ADD, // Add
     SUB, // Subtract
@@ -32,6 +34,9 @@ pub enum Opcode {
     JZ, // Jump if zero
     JNZ, // Jump if not zero
     HLT, // Halt
+    INP, // Input
+    OUT, // Output
+    DAT, // Data
 }
 
 impl Instruction {
@@ -51,10 +56,10 @@ impl Instruction {
     }
 
     /// Get binary representation of instruction
-    pub fn to_bin(&self) -> u8 {
-        let mut bin = 0b0000_0000;
-        bin |= self.opcode.to_bin();
-        bin |= self.operand;
+    pub fn to_bin(&self) -> Vec<u8> {
+        let mut bin = Vec::new();
+        bin.push(self.opcode.to_bin());
+        bin.push(self.operand);
         bin
     }
 }
@@ -62,6 +67,7 @@ impl Instruction {
 impl Opcode {
     /// Get the opcode from a byte
     pub fn from_byte(byte: u8) -> Opcode {
+        println!("convering {} to bytecode", byte);
         match byte {
             0x01 => Opcode::ADD, // 0000 0001 or 1
             0x02 => Opcode::SUB, // 0000 0010 or 2
@@ -77,6 +83,9 @@ impl Opcode {
             0x0C => Opcode::JZ,  // 0000 1100 or 12
             0x0D => Opcode::JNZ, // 0000 1101 or 13
             0x0E => Opcode::HLT, // 0000 1110 or 14
+            0x0F => Opcode::INP, // 0000 1111 or 15
+            0x10 => Opcode::OUT, // 0001 0000 or 16
+            0x11 => Opcode::DAT, // 0001 0001 or 17
             _ => panic!("Invalid opcode"),
         }
     }
@@ -98,6 +107,9 @@ impl Opcode {
             Opcode::JZ =>  0b0000_1100,
             Opcode::JNZ => 0b0000_1101,
             Opcode::HLT => 0b0000_1110,
+            Opcode::INP => 0b0000_1111,
+            Opcode::OUT => 0b0001_0000,
+            Opcode::DAT => 0b0001_0001,
         }
     }
 }
